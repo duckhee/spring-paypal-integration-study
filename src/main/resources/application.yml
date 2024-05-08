@@ -1,1 +1,11 @@
-spring.application.name=spring-paypal-integration-study
+spring:
+  application:
+    name: spring-paypal-integration-study
+  profiles:
+    active:
+      - paypal
+  thymeleaf:
+    cache: false
+
+
+

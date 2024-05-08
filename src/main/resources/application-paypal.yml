@@ -1,0 +1,13 @@
+spring:
+  config:
+    activate:
+      on-profile: paypal
+
+
+
+paypal:
+#  client-id: CLIENT_ID
+  client-id: EI3sQbg5KIDkzDye8YmFi9yNrIppFRuAJ122Lt9vqyIUB4iAHr-mGv0EithI-NZqbCRv2Qhr57Oh-tkg
+#  client-secret: CLIENT_SECRET
+  client-secret: EI3sQbg5KIDkzDye8YmFi9yNrIppFRuAJ122Lt9vqyIUB4iAHr-mGv0EithI-NZqbCRv2Qhr57Oh-tkg
+  mode: sandbox # dev mode  (use 'sandbox' for testing and 'live' for production)
