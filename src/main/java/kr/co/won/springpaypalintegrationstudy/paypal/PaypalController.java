@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.view.RedirectView;
 
 /**
@@ -49,5 +50,28 @@ public class PaypalController {
             log.error("Error occurred : {}", payPalRESTException);
         }
         return new RedirectView("/payment/error");
+    }
+
+    @GetMapping(path = "/payment/success")
+    public String paymentSuccess(@RequestParam(name = "paymentId") String paymentId, @RequestParam(name = "payerId") String payerId) {
+        try {
+            Payment payment = paypalService.executePayment(paymentId, payerId);
+            if (payment.getState().equals("approved")) {
+                return "paypal/payment-success";
+            }
+        } catch (PayPalRESTException payPalRESTException) {
+            log.error("Error occurred : {}", payPalRESTException);
+        }
+        return "paypal/payment-success";
+    }
+
+    @GetMapping(path = "/payment/cancel")
+    public String paymentCancel() {
+        return "paypal/payment-cancel";
+    }
+
+    @GetMapping(path = "/payment/error")
+    public String paymentError() {
+        return "paypal/payment-error";
     }
 }
