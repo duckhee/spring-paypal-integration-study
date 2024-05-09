@@ -53,7 +53,7 @@ public class PaypalController {
     }
 
     @GetMapping(path = "/payment/success")
-    public String paymentSuccess(@RequestParam(name = "paymentId") String paymentId, @RequestParam(name = "payerId") String payerId) {
+    public String paymentSuccess(@RequestParam(name = "paymentId") String paymentId, @RequestParam(name = "PayerID") String payerId) {
         try {
             Payment payment = paypalService.executePayment(paymentId, payerId);
             if (payment.getState().equals("approved")) {
