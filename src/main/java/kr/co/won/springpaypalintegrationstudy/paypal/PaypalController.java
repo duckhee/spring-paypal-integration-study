@@ -35,12 +35,17 @@ public class PaypalController {
     }
 
     @PostMapping(path = "/payment/create")
-    public RedirectView createPaymentDo() {
+    public RedirectView createPaymentDo(
+            @RequestParam(name = "method") String method,
+            @RequestParam(name = "amount") String amount,
+            @RequestParam(name = "currency") String currency
+            , @RequestParam(name = "description") String description
+    ) {
         try {
             String cancelUrl = "http://localhost:8080/payment/cancel";
             String successUrl = "http://localhost:8080/payment/success";
-            Payment payment = paypalService.createPayment(10.0, "USD", "paypal", "sale", "Payment Description", cancelUrl, successUrl);
-
+//            Payment payment = paypalService.createPayment(10.0, "USD", "paypal", "sale", "Payment Description", cancelUrl, successUrl);
+            Payment payment = paypalService.createPayment(Double.valueOf(amount), currency, method, "sale", description, cancelUrl, successUrl);
             for (Links link : payment.getLinks()) {
                 if (link.getRel().equals("approval_url")) {
                     return new RedirectView(link.getHref());
@@ -51,6 +56,7 @@ public class PaypalController {
         }
         return new RedirectView("/payment/error");
     }
+
     @GetMapping(path = "/payment/success")
     public String paymentSuccess(@RequestParam(name = "paymentId") String paymentId, @RequestParam(name = "PayerID") String payerId) {
         try {
