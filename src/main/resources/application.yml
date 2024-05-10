@@ -6,6 +6,8 @@ spring:
       - paypal
   thymeleaf:
     cache: false
+  jpa:
+    open-in-view: false
 
 
 
